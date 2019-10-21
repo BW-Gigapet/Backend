@@ -43,7 +43,7 @@ function findMeals(id) {
 }
 
 async function addMeal(meal) {
-  const [id] = await db('meals').insert(meal);
+  const [id] = await db('meals').insert(meal,'id');
 
   return findMealById(id);
 }

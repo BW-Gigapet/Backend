@@ -22,13 +22,13 @@ function findBy(filter) {
 }
 
 async function add(user) {
-  const [id] = await db('users').insert(user);
+  const [id] = await db('users').insert(user,'id');
 
   return findById(id);
 }
 
 async function addChild(child) {
-  const [id] = await db('childAccounts').insert(child);
+  const [id] = await db('childAccounts').insert(child,'id');
 
   return findChildById(id);
 }

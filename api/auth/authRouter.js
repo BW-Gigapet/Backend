@@ -12,10 +12,10 @@ router.post('/register', (req, res) => {
 
   Users.add(user)
     .then(saved => {
-      //tmp = saved;
-      //tmp.password = hash;
-      //const token = generateToken(tmp);
-      res.status(201).json({userAdded: saved, /*token:token*/});
+      tmp = saved;
+      tmp.password = hash;
+      const token = generateToken(tmp);
+      res.status(201).json({userAdded: saved, token:token});
     })
     .catch(err => {
       res.status(500).json({error:err, message:"testing"});
