@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,20 @@
   "bugs": {
     "url": "https://github.com/BW-Gigapet/Backend/issues"
   },
-  "homepage": "https://github.com/BW-Gigapet/Backend#readme"
+  "homepage": "https://github.com/BW-Gigapet/Backend#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.19.5",
+    "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4",
+    "supertest": "^4.0.2"
+  }
 }
