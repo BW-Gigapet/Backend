@@ -36,7 +36,8 @@ async function addChild(child) {
 function findById(id) {
   return db('users')
     .where({ id })
-    .first();
+    .first()
+    .select('id', 'name','email');
 }
 
 function findChildById(id) {

@@ -6,7 +6,12 @@ const restricted = require('../auth/restricted.js');
 router.get('/', restricted, (req, res) => {
   Users.find()
     .then(users => {
-     res.status(200).json({loggedInUser: req.user, users:users});
+      let tmp = req.user;
+        Users.findAllChildAccounts(tmp.id)
+        .then(children=>{
+          tmp.childAccounts = children;
+          res.status(200).json({loggedInUser: tmp, users:users});
+        })
     })
     .catch(err => {
       res.status(500).json({message:'Failed to get users',error:err})
@@ -17,7 +22,12 @@ router.get('/:id', restricted, (req, res) => {
   Users.findById(req.params.id)
     .then(user => {
       if(user){
-        res.status(200).json(user);
+        let tmp = user;
+        Users.findAllChildAccounts(req.params.id)
+        .then(children=>{
+          tmp.childAccounts = children;
+          res.status(200).json(tmp);
+        })      
       } else{
         res.status(404).json({message:'User with provided id not found'})
       }
