@@ -8,6 +8,7 @@ module.exports = {
   findById,
   findChildById,
   findAllChildAccounts,
+  findChildMeals,
   update,
   remove,
 };
@@ -47,6 +48,11 @@ function findChildById(id) {
 function findAllChildAccounts(id) {
   return db('childAccounts')
     .where({ parent_id:id })
+}
+
+function findChildMeals(id) {
+  return db('meals')
+    .where({ child_id: id })
 }
 
 function update(changes, id){

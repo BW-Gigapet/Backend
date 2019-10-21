@@ -27,6 +27,26 @@ router.get('/:id', restricted, (req, res) => {
     });
 });
 
+router.get('/:id/meals', restricted, (req, res) => {
+  Child.findById(req.params.id)
+    .then(child => {
+      if(child){
+        Child.findMeals(req.params.id)
+        .then(meals=>{
+          res.status(200).json(meals);
+        })
+        .catch(err=>{
+          res.status(500).json({message:'Failed to get meals',error:err})    
+        })
+      } else{
+        res.status(404).json({message:'Child with provided id not found'})
+      }
+    })
+    .catch(err => {
+      res.status(500).json({message:'Failed to get child',error:err})
+    });
+});
+
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;

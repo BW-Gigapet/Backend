@@ -5,6 +5,7 @@ module.exports = {
   findBy,
   findById,
   findParentById,
+  findMeals,
   update,
   remove,
 };
@@ -27,6 +28,11 @@ function findParentById(id) {
   return db('users')
     .where({ id })
     .first();
+}
+
+function findMeals(id) {
+  return db('meals')
+    .where({ child_id: id });
 }
 
 function update(changes, id){
