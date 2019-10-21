@@ -42,12 +42,13 @@ router.get('/:id/children', restricted, (req, res) => {
 });
 
 router.post('/:id/children', (req, res) => {
-  const childData = req.body;
+  let childData = req.body;
   const { id } = req.params;
 
   Users.findById(id)
     .then(user => {
       if (user) {
+        childData.parent_id = id;
         Users.addChild(childData, id)
           .then(child => {
             res.status(201).json(child);
