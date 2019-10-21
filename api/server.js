@@ -2,10 +2,10 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 
-const authRouter = require('../auth/authRouter.js');
-const userRouter = require('../users/userRouter.js');
-const childRouter = require('../child/childRouter.js');
-//const mealRouter = require('../meals/mealRouter.js');
+const authRouter = require('./auth/authRouter.js');
+const userRouter = require('./users/userRouter.js');
+const childRouter = require('./child/childRouter.js');
+//const mealRouter = require('./meals/mealRouter.js');
 
 const server = express();
 
