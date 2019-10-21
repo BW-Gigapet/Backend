@@ -18,4 +18,8 @@ server.use('/api/users', userRouter);
 server.use('/api/child', childRouter);
 //server.use('/api/meals', mealRouter);
 
+server.get('/', (req, res) => {
+  res.status(200).json('Api up and running!!');
+});
+
 module.exports = server;
