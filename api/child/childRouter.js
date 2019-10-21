@@ -47,6 +47,30 @@ router.get('/:id/meals', restricted, (req, res) => {
     });
 });
 
+router.post('/:id/meals', (req, res) => {
+  let mealData = req.body;
+  const { id } = req.params;
+
+  Child.findById(id)
+    .then(child => {
+      if (child) {
+        mealData.child_id = id;
+        Child.addMeal(mealData)
+          .then(meal => {
+            res.status(201).json(meal);
+          })
+          .catch(err=>{
+            res.status(500).json({ message: 'Failed to create meal', error:err });      
+          })
+      } else {
+        res.status(404).json({ message: 'Could not find child with given id.' })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get Child account', error:err });
+    });
+});
+
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;

@@ -1,6 +1,7 @@
 const db = require('../../data/dbConfig.js');
 
 module.exports = {
+  addMeal,
   find,
   findBy,
   findById,
@@ -24,6 +25,12 @@ function findById(id) {
     .first();
 }
 
+function findMealById(id) {
+  return db('meals')
+    .where({ id })
+    .first();
+}
+
 function findParentById(id) {
   return db('users')
     .where({ id })
@@ -33,6 +40,12 @@ function findParentById(id) {
 function findMeals(id) {
   return db('meals')
     .where({ child_id: id });
+}
+
+async function addMeal(meal) {
+  const [id] = await db('meals').insert(meal);
+
+  return findMealById(id);
 }
 
 function update(changes, id){

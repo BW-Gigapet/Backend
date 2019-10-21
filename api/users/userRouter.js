@@ -59,7 +59,7 @@ router.post('/:id/children', (req, res) => {
     .then(user => {
       if (user) {
         childData.parent_id = id;
-        Users.addChild(childData, id)
+        Users.addChild(childData)
           .then(child => {
             res.status(201).json(child);
           })
