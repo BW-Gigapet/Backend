@@ -31,7 +31,11 @@ returns an object with array of all users and the current logged in user
   loggedInUser: {
     id: 1,
     name: '',
-    email: ''
+    email: '',
+    childAccounts: [
+      {},
+      {}
+    ]
   }
   users: [
     {
@@ -54,7 +58,11 @@ returns object for user with the matching id provided
 {
   id: 1,
   name: '',
-  email: ''
+  email: '',
+  childAccounts: [
+      {},
+      {}
+    ]
 }
 ```
 
@@ -65,12 +73,20 @@ Reuturns an array with all child accounts for given user id:
   {
     id:
     name:
-    parent_id:
+    parent_id:,
+    meals: [
+      {},
+      {}
+    ]
   },
   {
     id:
     name:
-    parent_id:
+    parent_id:,
+    meals: [
+      {},
+      {}
+    ]
   },
 ]
 ```
@@ -98,14 +114,54 @@ returns the updated user object
 
 ~ GET https://bw-gigapet-ft.herokuapp.com/api/child ~
 returns an array of all child account objects
+```
+[
+  {
+    id:1
+    name:
+    parent_id:,
+    meals: [
+      {},
+      {}
+    ]
+  },
+  {
+    id:2
+    name:
+    parent_id:,
+    meals: [
+      {},
+      {}
+    ]
+  }
+]
+```
 
 ~ GET https://bw-gigapet-ft.herokuapp.com/api/child/:id ~
 returns child object for the provided id
-
+```
+{
+    id:
+    name:
+    parent_id:,
+    meals: [
+      {},
+      {}
+    ]
+}
+```
 ~ GET https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals ~
 Returns an array of all the meals belonging tot he child account with the provided id
 ```
 [
+  {
+    id:,
+    name:,
+    portionSize:,
+    date:,
+    time:,
+    child_id:,
+  },
   {
     id:,
     name:,
