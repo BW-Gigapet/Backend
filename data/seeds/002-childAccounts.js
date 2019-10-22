@@ -7,5 +7,5 @@ exports.seed = function (knex) {
     {name: 'Yvette', parent_id:2 },
     {name: 'Bryan', parent_id:3},
     {name: 'Andy', parent_id:3}
-  ]);
+  ],'id');
 };

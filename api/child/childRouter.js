@@ -6,44 +6,78 @@ const restricted = require('../auth/restricted.js');
 router.get('/', restricted, (req, res) => {
   Child.find()
     .then(children => {
-     res.status(200).json(children);
+      res.status(200).json(children);
     })
     .catch(err => {
-      res.status(500).json({message:'Failed to get child data',error:err})
+      res.status(500).json({ message: 'Failed to get child data', error: err })
     });
 });
 
 router.get('/:id', restricted, (req, res) => {
   Child.findById(req.params.id)
     .then(child => {
-      if(child){
-        res.status(200).json(child);
-      } else{
-        res.status(404).json({message:'Child with provided id not found'})
+      if (child) {
+        tmp = child;
+        tmp.meals = [];
+        Child.findMeals(tmp.id)
+          .then(meals => {
+            //tmp.meals = meals;
+            tmp.meals = addPercentToMeals(meals);
+            res.status(200).json(tmp);
+          })
+      } else {
+        res.status(404).json({ message: 'Child with provided id not found' })
       }
     })
     .catch(err => {
-      res.status(500).json({message:'Failed to get child',error:err})
+      res.status(500).json({ message: 'Failed to get child', error: err })
     });
 });
 
 router.get('/:id/meals', restricted, (req, res) => {
-  Child.findById(req.params.id)
+  let { id } = req.params;
+  Child.findById(id)
     .then(child => {
-      if(child){
-        Child.findMeals(req.params.id)
-        .then(meals=>{
-          res.status(200).json(meals);
-        })
-        .catch(err=>{
-          res.status(500).json({message:'Failed to get meals',error:err})    
-        })
-      } else{
-        res.status(404).json({message:'Child with provided id not found'})
+      if (child) {
+        if (req.query.foodType && req.query.filter) {
+          Child.findMealsDateType(req.query.foodType, req.query.filter, id)
+            .then(meals => {
+              res.status(200).json(addPercentToMeals(meals));
+            })
+            .catch(err => {
+              res.status(500).json({ message: 'Failed to get meals', error: err })
+            })
+        } else if(req.query.foodType && !req.query.filter){
+          Child.findMealsType(req.query.foodType, id)
+            .then(meals => {
+              res.status(200).json(addPercentToMeals(meals));
+            })
+            .catch(err => {
+              res.status(500).json({ message: 'Failed to get meals', error: err })
+            })
+        } else if(!req.query.foodType && req.query.filter){
+          Child.findMealsDate(req.query.filter, id)
+            .then(meals => {
+              res.status(200).json(addPercentToMeals(meals));
+            })
+            .catch(err => {
+              res.status(500).json({ message: 'Failed to get meals', error: err })
+            })
+        } else {
+          Child.findMeals(req.params.id)
+            .then(meals => {
+              res.status(200).json({ meals: addPercentToMeals(meals), query: req.query });
+            })
+            .catch(err => {
+              res.status(500).json({ message: 'Failed to get meals', error: err })
+            })
+        }
+      } else {
+        res.status(404).json({ message: 'Child with provided id not found' })
       }
     })
     .catch(err => {
-      res.status(500).json({message:'Failed to get child',error:err})
+      res.status(500).json({ message: 'Failed to get child', error: err })
     });
 });
 
@@ -59,15 +93,15 @@ router.post('/:id/meals', (req, res) => {
           .then(meal => {
             res.status(201).json(meal);
           })
-          .catch(err=>{
-            res.status(500).json({ message: 'Failed to create meal', error:err });      
+          .catch(err => {
+            res.status(500).json({ message: 'Failed to create meal', error: err });
           })
       } else {
         res.status(404).json({ message: 'Could not find child with given id.' })
       }
     })
     .catch(err => {
-      res.status(500).json({ message: 'Failed to get Child account', error:err });
+      res.status(500).json({ message: 'Failed to get Child account', error: err });
     });
 });
 
@@ -82,15 +116,15 @@ router.put('/:id', (req, res) => {
           .then(u => {
             res.status(200).json(u);
           })
-          .catch(err=>{
-            res.status(500).json({ message: 'Failed to update child', error:err });      
+          .catch(err => {
+            res.status(500).json({ message: 'Failed to update child', error: err });
           })
       } else {
         res.status(404).json({ message: 'Could not find child with given id' });
       }
     })
     .catch(err => {
-      res.status(500).json({ message: 'Failed to get Child data', error:err });
+      res.status(500).json({ message: 'Failed to get Child data', error: err });
     });
 });
 
@@ -106,10 +140,30 @@ router.delete('/:id', (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).json({ message: 'Failed to delete child', error:err });
+      res.status(500).json({ message: 'Failed to delete child', error: err });
     });
 });
 
+function addPercentToMeals(meals) {
+  let tmp = meals.map(meal => {
+    if (!meal.portionSize) return meal;
+    switch (meal.portionSize) {
+      case 'small':
+        meal.percent = 33;
+        break;
+      case 'medium':
+        meal.percent = 67;
+        break;
+      case 'large':
+        meal.percent = 100;
+        break;
+      default:
+        break
+    }
+    return meal;
+  })
+  return tmp;
+}
 
 
 module.exports = router;

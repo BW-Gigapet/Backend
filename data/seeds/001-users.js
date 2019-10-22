@@ -6,5 +6,5 @@ exports.seed = function (knex) {
     {name: 'Tim', email: 'tim@fakemail.com', password: hash },
     {name: 'Vanessa', email: 'vanessa@fakemail.com', password: hash },
     {name: 'Kim', email: 'kim@fakemail.com', password: hash }
-  ]);
+  ],'id');
 };

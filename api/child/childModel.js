@@ -7,6 +7,9 @@ module.exports = {
   findById,
   findParentById,
   findMeals,
+  findMealsType,
+  findMealsDate,
+  findMealsDateType,
   update,
   remove,
 };
@@ -42,6 +45,28 @@ function findMeals(id) {
     .where({ child_id: id });
 }
 
+function findMealsType(foodType, id) {
+  return db('meals')
+    .where({ child_id: id })
+    .where({name:foodType})
+}
+
+function findMealsDate(filter, id) {
+  let range = converDateFilterToRange(filter);
+   return db('meals')
+     .where({ child_id: id })
+     .whereBetween('date',[range.start,range.end])
+ }
+
+ function findMealsDateType(foodType,filter, id) {
+  let range = converDateFilterToRange(filter);
+  console.log("Date range: ",range)
+   return db('meals')
+     .where({ child_id: id })
+     .where({name:foodType})
+     .whereBetween('date',[range.start,range.end])
+ }
+
 async function addMeal(meal) {
   const [id] = await db('meals').insert(meal,'id');
 
@@ -69,4 +94,45 @@ function remove(id){
         return null;
       }
     });
+}
+
+function converDateFilterToRange(filter){
+   let curDate = new Date();
+   let yesterday = new Date(curDate.getFullYear(), curDate.getMonth(),curDate.getDate() - 1);
+  
+  let range = {};
+  switch(filter){
+    case 'today':
+      range = {start:curDate,end:curDate};
+      break;
+    case 'yesterday':
+        range = {start:yesterday,end:yesterday};
+        break;
+    case 'weekly':
+        let curWeekFirst = new Date(curDate.getFullYear(), curDate.getMonth(),(curDate.getDate() - curDate.getDay()));
+        let curWeekLast = new Date(curDate.getFullYear(), curDate.getMonth(),(curWeekFirst.getDate() + 6));
+        range = {start:curWeekFirst,end:curWeekLast};
+        break;
+    case 'monthly':
+        let curMonthFirst = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
+        let curMonthLast = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0);
+        range = {start:curMonthFirst,end:curMonthLast};
+        break;
+    case 'prevSeven':
+        //let lastSeven = new Date((yesterday.getDate() - 7));
+        let lastSeven = new Date(yesterday);
+        lastSeven.setDate(lastSeven.getDate()-7)
+        range = {start:lastSeven,end:yesterday};
+        break;
+    case 'prevThirty':
+        //let lastThirty = new Date(yesterday.getDate() - 30);
+        let lastThirty = new Date(yesterday);
+        lastThirty.setDate(lastThirty.getDate()-30)
+        range = {start:lastThirty,end:yesterday};
+        break;
+    default:
+      break;
+  }
+
+  return range;
 }
