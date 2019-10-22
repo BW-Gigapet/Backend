@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Meals = require('./mealModel.js');
 const restricted = require('../auth/restricted.js');
 
-router.get('/', restricted, (req, res) => {
+router.get('/', (req, res) => {
   Meals.find()
     .then(meals => {
      res.status(200).json(meals);
@@ -13,7 +13,7 @@ router.get('/', restricted, (req, res) => {
     });
 });
 
-router.get('/:id', restricted, (req, res) => {
+router.get('/:id', (req, res) => {
   Meals.findById(req.params.id)
     .then(meal => {
       if(meal){

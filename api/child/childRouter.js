@@ -91,7 +91,7 @@ router.get('/:id/meals', restricted, (req, res) => {
     });
 });
 
-router.post('/:id/meals', (req, res) => {
+router.post('/:id/meals', restricted, validateMeal, (req, res) => {
   let mealData = req.body;
   const { id } = req.params;
 
@@ -115,7 +115,7 @@ router.post('/:id/meals', (req, res) => {
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', restricted, (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
@@ -138,7 +138,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const { id } = req.params;
 
   Child.remove(id)
@@ -157,7 +157,7 @@ router.delete('/:id', (req, res) => {
 function addPercentToMeals(meals) {
   let tmp = meals.map(meal => {
     if (!meal.portionSize) return meal;
-    switch (meal.portionSize) {
+    switch (meal.portionSize.toLowerCase()) {
       case 'small':
         meal.percent = 33;
         break;
@@ -174,6 +174,17 @@ function addPercentToMeals(meals) {
   })
   return tmp;
 }
+
+
+function validateMeal(req, res, next) {
+  if (!req.body) {
+    res.status(400).json({ errorMessage: "Missing meal data" });
+  } else if (!req.body.name || !req.body.portionSize || !req.body.date || !req.body.time){
+    res.status(400).json({ errorMessage: "Please provide an object with the following keys {name:'',portionSize:'',date:,time:}" });
+  }else{
+    next();
+  }
+};
 
 
 module.exports = router;

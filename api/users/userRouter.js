@@ -51,7 +51,7 @@ router.get('/:id/children', restricted, (req, res) => {
     });
 });
 
-router.post('/:id/children', (req, res) => {
+router.post('/:id/children', restricted, validateChild, (req, res) => {
   let childData = req.body;
   const { id } = req.params;
 
@@ -75,7 +75,7 @@ router.post('/:id/children', (req, res) => {
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', restricted, (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
@@ -98,7 +98,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const { id } = req.params;
 
   Users.remove(id)
@@ -115,5 +115,14 @@ router.delete('/:id', (req, res) => {
 });
 
 
+function validateChild(req, res, next) {
+  if (!req.body) {
+    res.status(400).json({ errorMessage: "Missing child data" });
+  } else if (!req.body.name){
+    res.status(400).json({ errorMessage: "Please provide an object with the following keys {name:''}" });
+  } else {
+    next();
+  }
+};
 
 module.exports = router;
