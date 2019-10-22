@@ -76,7 +76,7 @@ router.get('/:id/meals', restricted, (req, res) => {
         } else {
           Child.findMeals(req.params.id)
             .then(meals => {
-              res.status(200).json({ meals: addPercentToMeals(meals), query: req.query });
+              res.status(200).json(addPercentToMeals(meals));
             })
             .catch(err => {
               res.status(500).json({ message: 'Failed to get meals', error: err })

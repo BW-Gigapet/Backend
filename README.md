@@ -28,66 +28,87 @@ on success returns a welcome message and a token.
 returns an object with array of all users and the current logged in user
 ```
 {
-  loggedInUser: {
-    id: 1,
-    name: '',
-    email: '',
-    childAccounts: [
-      {},
-      {}
+  "loggedInUser": {
+    "name": "Tim",
+    "email": "tim@fakemail.com",
+    "id": 1,
+    "iat": 1571781381,
+    "exp": 1571867781,
+    "childAccounts": [
+      {
+        "id": 2,
+        "name": "Allison",
+        "parent_id": 1
+      },
+      {
+        "id": 1,
+        "name": "Issac",
+        "parent_id": 1
+      }
     ]
-  }
-  users: [
+  },
+  "users": [
     {
-      id: 1,
-      name: '',
-      email: ''
+      "id": 1,
+      "name": "Tim",
+      "email": "tim@fakemail.com"
     },
     {
-      id: 2,
-      name: '',
-      email: ''
+      "id": 2,
+      "name": "Vanessa",
+      "email": "vanessa@fakemail.com"
+    },
+    {
+      "id": 3,
+      "name": "Kim",
+      "email": "kim@fakemail.com"
     }
   ]
 }
+
 ```
 
 ~ GET https://bw-gigapet-ft.herokuapp.com/api/users/:id ~
 returns object for user with the matching id provided
+
+https://bw-gigapet-ft.herokuapp.com/api/users/1
 ```
 {
-  id: 1,
-  name: '',
-  email: '',
-  childAccounts: [
-      {},
-      {}
-    ]
+  "id": 1,
+  "name": "Tim",
+  "email": "tim@fakemail.com",
+  "childAccounts": [
+    {
+      "id": 2,
+      "name": "Allison",
+      "parent_id": 1
+    },
+    {
+      "id": 1,
+      "name": "Issac",
+      "parent_id": 1
+    }
+  ]
 }
+
 ```
 
 ~ GET https://bw-gigapet-ft.herokuapp.com/api/users/:id/children ~
 Reuturns an array with all child accounts for given user id:
+
+https://bw-gigapet-ft.herokuapp.com/api/users/1/children
 ```
 [
   {
-    id:
-    name:
-    parent_id:,
-    meals: [
-      {},
-      {}
-    ]
+    "id": 2,
+    "name": "Allison",
+    "parent_id": 1
   },
   {
-    id:
-    name:
-    parent_id:,
-    meals: [
-      {},
-      {}
-    ]
-  },
+    "id": 1,
+    "name": "Issac",
+    "parent_id": 1
+  }
 ]
 ```
 ~ POST https://bw-gigapet-ft.herokuapp.com/api/users/:id/children ~
@@ -117,41 +138,111 @@ returns an array of all child account objects
 ```
 [
   {
-    id:1
-    name:
-    parent_id:,
-    meals: [
-      {},
-      {}
-    ]
+    "id": 1,
+    "name": "Issac",
+    "parent_id": 1
   },
   {
-    id:2
-    name:
-    parent_id:,
-    meals: [
-      {},
-      {}
-    ]
+    "id": 2,
+    "name": "Allison",
+    "parent_id": 1
+  },
+  {
+    "id": 3,
+    "name": "Cristine",
+    "parent_id": 2
+  },
+  {
+    "id": 4,
+    "name": "Yvette",
+    "parent_id": 2
+  },
+  {
+    "id": 5,
+    "name": "Bryan",
+    "parent_id": 3
+  },
+  {
+    "id": 6,
+    "name": "Andy",
+    "parent_id": 3
   }
 ]
+
 ```
 
 ~ GET https://bw-gigapet-ft.herokuapp.com/api/child/:id ~
 returns child object for the provided id
+
+https://bw-gigapet-ft.herokuapp.com/api/child/1
 ```
 {
-    id:
-    name:
-    parent_id:,
-    meals: [
-      {},
-      {}
-    ]
+  "id": 1,
+  "name": "Issac",
+  "parent_id": 1,
+  "meals": [
+    {
+      "id": 1,
+      "name": "Vegetables",
+      "portionSize": "small",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 33
+    },
+    {
+      "id": 2,
+      "name": "Vegetables",
+      "portionSize": "medium",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 67
+    },
+    {
+      "id": 3,
+      "name": "Vegetables",
+      "portionSize": "large",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 100
+    },
+    {
+      "id": 4,
+      "name": "Protein",
+      "portionSize": "small",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 33
+    },
+    {
+      "id": 5,
+      "name": "Protein",
+      "portionSize": "medium",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 67
+    },
+    {
+      "id": 6,
+      "name": "Protein",
+      "portionSize": "large",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 100
+    }
+  ]
 }
+
 ```
 ~ GET https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals ~
 Returns an array of all the meals belonging tot he child account with the provided id
+
+https://bw-gigapet-ft.herokuapp.com/api/child/1/meals
 ```
 [
   {
