@@ -48,7 +48,7 @@ function findMeals(id) {
 function findMealsType(foodType, id) {
   return db('meals')
     .where({ child_id: id })
-    .where({name:foodType})
+    .whereRaw('LOWER(name) LIKE ?', '%'+foodType.toLowerCase()+'%')
 }
 
 function findMealsDate(filter, id) {
@@ -63,7 +63,7 @@ function findMealsDate(filter, id) {
   console.log("Date range: ",range)
    return db('meals')
      .where({ child_id: id })
-     .where({name:foodType})
+     .whereRaw('LOWER(name) LIKE ?', '%'+foodType.toLowerCase()+'%')
      .whereBetween('date',[range.start,range.end])
  }
 
@@ -97,11 +97,12 @@ function remove(id){
 }
 
 function converDateFilterToRange(filter){
+  const tmp = filter.toLowerCase();
    let curDate = new Date();
    let yesterday = new Date(curDate.getFullYear(), curDate.getMonth(),curDate.getDate() - 1);
   
   let range = {};
-  switch(filter){
+  switch(tmp){
     case 'today':
       range = {start:curDate,end:curDate};
       break;
