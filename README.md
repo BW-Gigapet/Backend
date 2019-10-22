@@ -179,6 +179,27 @@ with foodType and or filter
 foodtype will return all the meals where the name matches the foodType (aka Vegetables)
     https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?foodType=Vegetables
 
+```
+[
+  {
+    id:,
+    name: WILL MATCH WHAT WAS SET TO foodType,
+    portionSize:,
+    date:,
+    time:,
+    child_id:,
+  },
+  {
+    id:,
+    name: WILL MATCH WHAT WAS SET TO foodType,
+    portionSize:,
+    date:,
+    time:,
+    child_id:,
+  },
+]
+```
+
 filter will return all the meals that fall within the range for the date, based on categories
 the categories are:
 
@@ -191,9 +212,57 @@ monthly - returns all meals that are dated for the current month
 
     https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?filter=prevSeven
 
+```
+[
+  {
+    id:,
+    name:,
+    portionSize:,
+    date:,
+    time: WILL BE IN THE RANGE SET BY filter,
+    child_id:,
+  },
+  {
+    id:,
+    name:,
+    portionSize:,
+    date: WILL BE IN THE RANGE SET BY filter,
+    time:,
+    child_id:,
+  },
+]
+```
+
 you can also combine the two and query by both
 
     https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?foodType=Vegetables&&filter=today
+
+querying both will not return an array, it will return an object with a meals array, the total of the percentages and the daily average for that period.
+
+```
+{
+  meals: [
+    {
+      id:,
+      name: WILL MATCH WHAT WAS SET TO foodType,
+      portionSize:,
+      date:,
+      time: WILL BE IN THE RANGE SET BY filter,
+      child_id:,
+    },
+    {
+      id:,
+      name: WILL MATCH WHAT WAS SET TO foodType,
+      portionSize:,
+      date:,
+      time: WILL BE IN THE RANGE SET BY filter,
+      child_id:,
+    },
+  ],
+  totalPercent:,
+  average
+}
+```
 
 
 ~ PUT https://bw-gigapet-ft.herokuapp.com/api/child/:id ~
