@@ -173,6 +173,29 @@ Returns an array of all the meals belonging tot he child account with the provid
 ]
 ```
 
+YOU CAN QUERY THIS ENDPOINT
+with foodType and or filter
+
+foodtype will return all the meals where the name matches the foodType (aka Vegetables)
+    https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?foodType=Vegetables
+
+filter will return all the meals that fall within the range for the date, based on categories
+the categories are:
+
+today - returns all meals that are dated for todays date
+yesterday - returns all meals that are dated for yesterdays date
+prevSeven - returns all meals that are dated for the previos 7 days
+prevThirty - returns all meals that are dated for the previos 30 days
+weekly - returns all meals that are dated for the current week
+monthly - returns all meals that are dated for the current month
+
+    https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?filter=prevSeven
+
+you can also combine the two and query by both
+
+    https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?foodType=Vegetables&&filter=today
+
+
 ~ PUT https://bw-gigapet-ft.herokuapp.com/api/child/:id ~
 will change whatever you pass into the object, not required to pass in all, just the fields you want to change
 changing parent_id will link the child to a different parent.
@@ -187,5 +210,45 @@ returns the updated child account object
 ~ DELETE https://bw-gigapet-ft.herokuapp.com/api/child/:id ~
 deletes the child account with the provided id, returns the deleted child object
 
-~~ TO DO!!  ~~
 /api/meals
+
+GET https://bw-gigapet-ft.herokuapp.com/api/meals/
+Returns an array of all meal objects
+```
+[
+  {
+    id:,
+    name:,
+    portionSize:,
+    date:,
+    time:,
+    child_id:,
+  },
+  {
+    id:,
+    name:,
+    portionSize:,
+    date:,
+    time:,
+    child_id:,
+  },
+]
+```
+
+GET https://bw-gigapet-ft.herokuapp.com/api/meals/:id
+returns the meal object for provided id
+```
+{
+    id:,
+    name:,
+    portionSize:,
+    date:,
+    time:,
+    child_id:,
+}
+```
+PUT https://bw-gigapet-ft.herokuapp.com/api/meals/:id
+edit the meal object for provided id
+
+DELETE https://bw-gigapet-ft.herokuapp.com/api/meals/:id
+delete the meal object for provided id
