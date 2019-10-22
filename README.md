@@ -246,22 +246,61 @@ https://bw-gigapet-ft.herokuapp.com/api/child/1/meals
 ```
 [
   {
-    id:,
-    name:,
-    portionSize:,
-    date:,
-    time:,
-    child_id:,
+    "id": 1,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 33
   },
   {
-    id:,
-    name:,
-    portionSize:,
-    date:,
-    time:,
-    child_id:,
+    "id": 2,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 67
   },
+  {
+    "id": 3,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 100
+  },
+  {
+    "id": 4,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 33
+  },
+  {
+    "id": 5,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 67
+  },
+  {
+    "id": 6,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 100
+  }
 ]
+
 ```
 
 YOU CAN QUERY THIS ENDPOINT
@@ -270,25 +309,39 @@ with foodType and or filter
 foodtype will return all the meals where the name matches the foodType (aka Vegetables)
     https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?foodType=Vegetables
 
+    https://bw-gigapet-ft.herokuapp.com/api/child/1/meals?foodType=Vegetables
+
 ```
 [
   {
-    id:,
-    name: WILL MATCH WHAT WAS SET TO foodType,
-    portionSize:,
-    date:,
-    time:,
-    child_id:,
+    "id": 1,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 33
   },
   {
-    id:,
-    name: WILL MATCH WHAT WAS SET TO foodType,
-    portionSize:,
-    date:,
-    time:,
-    child_id:,
+    "id": 2,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 67
   },
+  {
+    "id": 3,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 100
+  }
 ]
+
 ```
 
 filter will return all the meals that fall within the range for the date, based on categories
@@ -303,25 +356,66 @@ monthly - returns all meals that are dated for the current month
 
     https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals?filter=prevSeven
 
+    https://bw-gigapet-ft.herokuapp.com/api/child/1/meals?filter=today
+
 ```
 [
   {
-    id:,
-    name:,
-    portionSize:,
-    date:,
-    time: WILL BE IN THE RANGE SET BY filter,
-    child_id:,
+    "id": 1,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 33
   },
   {
-    id:,
-    name:,
-    portionSize:,
-    date: WILL BE IN THE RANGE SET BY filter,
-    time:,
-    child_id:,
+    "id": 2,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 67
   },
+  {
+    "id": 3,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 100
+  },
+  {
+    "id": 4,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 33
+  },
+  {
+    "id": 5,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 67
+  },
+  {
+    "id": 6,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1,
+    "percent": 100
+  }
 ]
+
 ```
 
 you can also combine the two and query by both
@@ -330,29 +424,42 @@ you can also combine the two and query by both
 
 querying both will not return an array, it will return an object with a meals array, the total of the percentages and the daily average for that period.
 
+https://bw-gigapet-ft.herokuapp.com/api/child/1/meals?foodType=Vegetables&&filter=today
 ```
 {
-  meals: [
+  "meals": [
     {
-      id:,
-      name: WILL MATCH WHAT WAS SET TO foodType,
-      portionSize:,
-      date:,
-      time: WILL BE IN THE RANGE SET BY filter,
-      child_id:,
+      "id": 1,
+      "name": "Vegetables",
+      "portionSize": "small",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 33
     },
     {
-      id:,
-      name: WILL MATCH WHAT WAS SET TO foodType,
-      portionSize:,
-      date:,
-      time: WILL BE IN THE RANGE SET BY filter,
-      child_id:,
+      "id": 2,
+      "name": "Vegetables",
+      "portionSize": "medium",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 67
     },
+    {
+      "id": 3,
+      "name": "Vegetables",
+      "portionSize": "large",
+      "date": "2019-10-22T00:00:00.000Z",
+      "time": "10:30:00",
+      "child_id": 1,
+      "percent": 100
+    }
   ],
-  totalPercent:,
-  average
+  "totalPercent": 200,
+  "average": 200
 }
+
 ```
 
 
@@ -377,35 +484,311 @@ Returns an array of all meal objects
 ```
 [
   {
-    id:,
-    name:,
-    portionSize:,
-    date:,
-    time:,
-    child_id:,
+    "id": 1,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1
   },
   {
-    id:,
-    name:,
-    portionSize:,
-    date:,
-    time:,
-    child_id:,
+    "id": 2,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1
   },
+  {
+    "id": 3,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1
+  },
+  {
+    "id": 4,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1
+  },
+  {
+    "id": 5,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1
+  },
+  {
+    "id": 6,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 1
+  },
+  {
+    "id": 7,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 2
+  },
+  {
+    "id": 8,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 2
+  },
+  {
+    "id": 9,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 2
+  },
+  {
+    "id": 10,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 2
+  },
+  {
+    "id": 11,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 2
+  },
+  {
+    "id": 12,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 2
+  },
+  {
+    "id": 13,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 3
+  },
+  {
+    "id": 14,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 3
+  },
+  {
+    "id": 15,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 3
+  },
+  {
+    "id": 16,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 3
+  },
+  {
+    "id": 17,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 3
+  },
+  {
+    "id": 18,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 3
+  },
+  {
+    "id": 19,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 4
+  },
+  {
+    "id": 20,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 4
+  },
+  {
+    "id": 21,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 4
+  },
+  {
+    "id": 22,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 4
+  },
+  {
+    "id": 23,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 4
+  },
+  {
+    "id": 24,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 4
+  },
+  {
+    "id": 25,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 5
+  },
+  {
+    "id": 26,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 5
+  },
+  {
+    "id": 27,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 5
+  },
+  {
+    "id": 28,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 5
+  },
+  {
+    "id": 29,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 5
+  },
+  {
+    "id": 30,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 5
+  },
+  {
+    "id": 31,
+    "name": "Vegetables",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 6
+  },
+  {
+    "id": 32,
+    "name": "Vegetables",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 6
+  },
+  {
+    "id": 33,
+    "name": "Vegetables",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 6
+  },
+  {
+    "id": 34,
+    "name": "Protein",
+    "portionSize": "small",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 6
+  },
+  {
+    "id": 35,
+    "name": "Protein",
+    "portionSize": "medium",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 6
+  },
+  {
+    "id": 36,
+    "name": "Protein",
+    "portionSize": "large",
+    "date": "2019-10-22T00:00:00.000Z",
+    "time": "10:30:00",
+    "child_id": 6
+  }
 ]
+
 ```
 
 GET https://bw-gigapet-ft.herokuapp.com/api/meals/:id
 returns the meal object for provided id
+
+https://bw-gigapet-ft.herokuapp.com/api/meals/1
 ```
 {
-    id:,
-    name:,
-    portionSize:,
-    date:,
-    time:,
-    child_id:,
+  "id": 1,
+  "name": "Vegetables",
+  "portionSize": "small",
+  "date": "2019-10-22T00:00:00.000Z",
+  "time": "10:30:00",
+  "child_id": 1
 }
+
 ```
 PUT https://bw-gigapet-ft.herokuapp.com/api/meals/:id
 edit the meal object for provided id
