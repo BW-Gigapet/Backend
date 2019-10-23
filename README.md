@@ -462,6 +462,16 @@ https://bw-gigapet-ft.herokuapp.com/api/child/1/meals?foodType=Vegetables&&filte
 
 ```
 
+~ POST https://bw-gigapet-ft.herokuapp.com/api/child/:id/meals ~
+add a meal to the child with provided id. meal object should be as follows:
+```
+{
+    "name":"Vegetables",     //the category type: Vegetables, Proteins, etc
+    "portionSize":"medium",  //the portion size: small, medium, large (gets converted into percentages)
+    "date":"10/22/2019",    //
+    "time":"11:37"
+}
+```
 
 ~ PUT https://bw-gigapet-ft.herokuapp.com/api/child/:id ~
 will change whatever you pass into the object, not required to pass in all, just the fields you want to change

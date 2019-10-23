@@ -119,19 +119,20 @@ function converDateFilterToRange(filter){
         let curMonthLast = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0);
         range = {start:curMonthFirst,end:curMonthLast};
         break;
-    case 'prevSeven':
+    case 'prevseven':
         //let lastSeven = new Date((yesterday.getDate() - 7));
         let lastSeven = new Date(yesterday);
-        lastSeven.setDate(lastSeven.getDate()-7)
+        lastSeven.setDate(yesterday.getDate()-7)
         range = {start:lastSeven,end:yesterday};
         break;
-    case 'prevThirty':
+    case 'prevthirty':
         //let lastThirty = new Date(yesterday.getDate() - 30);
-        let lastThirty = new Date(yesterday);
+        let lastThirty = yesterday;
         lastThirty.setDate(lastThirty.getDate()-30)
         range = {start:lastThirty,end:yesterday};
         break;
     default:
+      range ={message:'error'}
       break;
   }
 

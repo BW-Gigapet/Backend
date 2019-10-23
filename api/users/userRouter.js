@@ -1,7 +1,14 @@
 const router = require('express').Router();
 
 const Users = require('./userModel.js');
+const Child = require('../child/childModel.js');
 const restricted = require('../auth/restricted.js');
+
+const asyncMiddleware = fn =>
+  (req, res, next) => {
+    Promise.resolve(fn(req, res, next))
+      .catch(next);
+  };
 
 router.get('/', restricted, (req, res) => {
   Users.find()
@@ -17,6 +24,16 @@ router.get('/', restricted, (req, res) => {
       res.status(500).json({message:'Failed to get users',error:err})
     });
 });
+
+router.get('/current', restricted, asyncMiddleware( async (req, res) => {
+  let tmp = req.user;
+  tmp.childAccounts = await Users.findAllChildAccounts(tmp.id); 
+  for(i=0;i<tmp.childAccounts.length;i++){
+    tmp.childAccounts[i].meals = await Child.findMeals(tmp.childAccounts[i].id)
+  }
+
+  res.status(200).json(tmp);
+}));
 
 router.get('/:id', restricted, (req, res) => {
   Users.findById(req.params.id)
