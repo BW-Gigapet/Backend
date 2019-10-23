@@ -31,8 +31,8 @@ function update(changes, id){
     });
 }
 
-function remove(id){
-  let meal = findById(id);
+async function remove(id){
+  let meal = await findById(id);
   return db('meals')
     .where({id})
     .del()

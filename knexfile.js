@@ -36,7 +36,7 @@ module.exports = {
       directory: './data/migrations',
     },
     seeds: {
-      directory: './data/seeds',
+      directory: './data/testSeeds',
     },
     pool: {
       min: 2,

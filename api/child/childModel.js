@@ -82,8 +82,8 @@ function update(changes, id){
     });
 }
 
-function remove(id){
-  let child = findById(id);
+async function remove(id){
+  let child = await findById(id);
   return db('childAccounts')
     .where({id})
     .del()

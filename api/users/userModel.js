@@ -65,8 +65,8 @@ function update(changes, id){
     });
 }
 
-function remove(id){
-  let user = findById(id);
+async function remove(id){
+  let user = await findById(id);
   return db('users')
     .where({id})
     .del()
