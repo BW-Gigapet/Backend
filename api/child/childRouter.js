@@ -42,6 +42,7 @@ router.get('/:id/meals', restricted, (req, res) => {
         if (req.query.foodType && req.query.filter) {
           Child.findMealsDateType(req.query.foodType, req.query.filter, id)
             .then(meals => {
+              if(meals.length>0){
               let mealArr = addPercentToMeals(meals);
               let totalsObject = {};
               mealArr.map(meal=>{
@@ -53,6 +54,9 @@ router.get('/:id/meals', restricted, (req, res) => {
               let totalPercent = Object.values(totalsObject).reduce((a, b) => a + b);
               let average = totalPercent / Object.values(totalsObject).length;
               res.status(200).json({meals:mealArr,totalPercent:totalPercent,average:average});
+            } else {
+              res.status(200).json({meals:[],totalPercent:0,average:0});
+            }
             })
             .catch(err => {
               res.status(500).json({ message: 'Failed to get meals', error: err })
