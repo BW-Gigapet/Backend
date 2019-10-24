@@ -1,18 +1,9 @@
 const request = require('supertest');
 const server = require('../server.js');
 const db = require('../../data/dbConfig.js');
-var Promise = require('bluebird');
 
-var tables = [
-  'users',
-  'childAccounts',
-  'meals',
-];
-
-function truncate() {
-  return Promise.each(tables, function (table) {
-    return db.raw('truncate table ' + table + ' cascade');
-  });
+async function truncate() {
+  await db.raw(`TRUNCATE TABLE meals, "childAccounts", users CASCADE`);
 };
 
 let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGltIiwiZW1haWwiOiJ0aW1AZmFrZW1haWwuY29tIiwiaWQiOjEsImlhdCI6MTU3MTg0ODAzMiwiZXhwIjoxNTcxOTM0NDMyfQ.xx6kzkmPPa6i1O4fkVWmq9iFwSM-SFMJP6RPsaWAnaw';

@@ -1,40 +1,80 @@
 const request = require('supertest');
 const server = require('../server.js');
 const db = require('../../data/dbConfig.js');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const secrets = require('../../config/secrets.js');
 
-const Promise = require('bluebird');
-
-const tables = [
-  'meals',
-  'childAccounts',
-  'users'
-];
-
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3ZlbiIsImVtYWlsIjoic3ZlbkBmYWtlbWFpbC5jb20iLCJpZCI6MzUsImlhdCI6MTU3MTg2MjMzMywiZXhwIjoxNTcxOTQ4NzMzfQ.0_SnTpKkKZzThqEx4umlhb9rSMPHVoM-XNlK215dxew'
-
-function truncate() {
-  return Promise.each(tables, function (table) {
-    return db.raw('truncate table ' + table + ' cascade');
-  });
+async function truncate() {
+  await db.raw(`TRUNCATE TABLE meals, "childAccounts", users CASCADE`);
 };
 
 describe('userRouter.js', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     return truncate();
   });
   
-  describe('GET /', () => {
-    it('should return json with a 200 http status code and proper data', async () => {
-      const r = await request(server).post('/api/register')
+  describe('DELETE /:id', () => {
+    it('should return json with a 200 http status code and proper data', () => {
+      return request(server).post('/api/register')
         .send({ name: "steven", email: 'steven@mail.com', password: "123" })
+        .then(r=>{
+          return request(server).post('/api/login')
+          .send({ email: 'steven@mail.com', password: "123" })
+          .then(re=>{
+            return request(server)
+            .del(`/api/users/${r.body.userAdded.id}`)
+            .set('authorization', re.body.token)
+            .then(res=>{
+              expect(res.type).toMatch(/json/i);
+              expect(res.status).toEqual(200);
+              expect(res.body.name).toMatch('steven');
+            })
+          })
+        })
+    });
 
-      const res = await request(server).get('/api/users/').set('authorization', token);
-      expect(res.type).toMatch(/json/i);
-      expect(res.status).toEqual(200);
-      expect(res.body.users.length).toEqual(1);
+    describe('PUT /:id', () => {
+      it('should return json with a 200 http status code and proper data', () => {
+        return request(server).post('/api/register')
+          .send({ name: "steven", email: 'steven@mail.com', password: "123" })
+          .then(r=>{
+            return request(server).post('/api/login')
+            .send({ email: 'steven@mail.com', password: "123" })
+            .then(re=>{
+              return request(server)
+              .put(`/api/users/${r.body.userAdded.id}`)
+              .set('authorization', re.body.token)
+              .send({name:"blob"})
+              .then(res=>{
+                expect(res.type).toMatch(/json/i);
+                expect(res.status).toEqual(200);
+                expect(res.body.name).toMatch('blob');
+              })
+            })
+          })
+      });
+    });
+
+  });
+
+  describe('GET /:id', () => {
+    it('should return json with a 201 http status code and proper data', () => {
+      return request(server).post('/api/register')
+        .send({ name: "steven", email: 'steven@mail.com', password: "123" })
+        .then(r=>{
+          return request(server).post('/api/login')
+          .send({ email: 'steven@mail.com', password: "123" })
+          .then(re=>{
+            return request(server)
+            .get(`/api/users/${r.body.userAdded.id}`)
+            .set('authorization', re.body.token)
+            //.send({name:"blobby"})
+            .then(res=>{
+              console.log('hi: ', res.body)
+              expect(res.type).toMatch(/json/i);
+              expect(res.status).toEqual(200);
+              expect(res.body.name).toMatch('steven');
+            })
+          })
+        })
     });
   });
 

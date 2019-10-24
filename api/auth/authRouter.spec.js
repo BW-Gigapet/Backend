@@ -5,18 +5,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const secrets = require('../../config/secrets.js');
 
-const Promise   = require('bluebird');
-
-const tables = [
-  'meals',
-  'childAccounts',
-  'users'
-];
-
-function truncate () {
-  return Promise.each(tables, function (table) {
-    return db.raw('truncate table ' + table + ' cascade');
-  });
+async function truncate() {
+  await db.raw(`TRUNCATE TABLE meals, "childAccounts", users CASCADE`);
 };
 
 beforeEach(() => {
