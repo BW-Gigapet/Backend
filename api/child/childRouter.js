@@ -123,7 +123,7 @@ router.put('/:id', restricted, (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  Users.findById(id)
+  Child.findById(id)
     .then(child => {
       if (child) {
         Child.update(changes, id)
