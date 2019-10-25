@@ -3,6 +3,8 @@ const router = require('express').Router();
 const Users = require('./userModel.js');
 const Child = require('../child/childModel.js');
 const restricted = require('../auth/restricted.js');
+const bcrypt = require('bcryptjs');
+
 
 const asyncMiddleware = fn =>
   (req, res, next) => {
@@ -99,6 +101,9 @@ router.put('/:id', restricted, (req, res) => {
   Users.findById(id)
     .then(user => {
       if (user) {
+        if(user.password){
+          user.password =  bcrypt.hashSync(user.password, 6);
+        }
         Users.update(changes, id)
           .then(u => {
             res.status(200).json(u);
